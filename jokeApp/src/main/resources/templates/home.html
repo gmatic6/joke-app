@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>Croz jokes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+	<script src="https://use.fontawesome.com/a6daa2fe60.js"></script>
+	<style th:inline="text">
+	input[type=number]::-webkit-inner-spin-button, 
+	input[type=number]::-webkit-outer-spin-button { 
+  		-webkit-appearance: none; 
+  		margin: 0; 
+	}
+	input[type=number] {
+    	-moz-appearance:textfield;
+	}
+	
+	.selectWidth {
+		width:auto;	
+  	}
+  	body{
+        background: url('[[@{/resources/images/RegisterBackground.jpg}]]')
+                    no-repeat center center fixed;
+        background-size:cover;
+       
+    }
+    .top{margin-top:10%}
+    
+     .navbar {
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    opacity:0.8;
+	}
+	.navbar-default .navbar-nav > li > a {
+    color: 	#ADD8E6;
+	}
+	.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: 	#FFF;
+	}
+    .navbar-nav li.active a {
+    color: #fff !important;
+    background-color:#29292c !important;
+	}
+	
+	  .panel {
+	     border: 0px solid #2196f3; 
+	     border-radius:0 !important;
+	     transition: box-shadow 0.5s;
+	     margin-top: 30%;
+	     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	  }
+	  .panel .btn:hover {
+	      border: 1px solid #2E64FE;
+	      background-color: #2E64FE !important;
+	      color: #fff;
+	  }
+	  .panel-heading {
+	      color: #fff !important;
+	      background-color: #2196f3 !important;
+	      border-bottom: 0px solid transparent;
+	      border-top-left-radius: 0px;
+	      border-top-right-radius: 0px;
+	      border-bottom-left-radius: 0px;
+	      border-bottom-right-radius: 0px;
+	  }
+	  .panel-footer {
+	      background-color: white !important;
+	  }
+	  .panel-footer h3 {
+	      font-size: 32px;
+	  }
+	  .panel-footer h4 {
+	      color: #2196f3;
+	      font-size: 14px;
+	  }
+	  .panel .btn {
+	      border: 1px solid #2196f3;
+	      background-color: #fff !important;
+	      color: #2E64FE;
+	  }
+	</style>
+</head>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="active"><a th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i> Početna</a></li>
+      <li><a th:href="@{/new}">Dodaj vic</a></li>
+      <li><a th:href="@{/login}">Prijava/odjava</a></li>
+    </ul>
+    
+  </div>
+</nav>
+
+<body>
+	<div class="container-fluid">
+	  <div class="row">
+	    <div class="col-lg-6 col-md-7 col-sm-6 col-md-offset-3">
+	      <div class="panel panel-default text-left">
+	        <div class="panel-heading">
+	          <h1>sCroz dobri vicevi - popis</h1>
+	        </div>
+	        <div th:if="${not #lists.isEmpty(jokes)}" >
+		        <table class="table table-striped">
+		            <tr>
+		                <th><i class="fa fa-smile-o" aria-hidden="true"></i></th>
+		                <th>Kategorija</th>
+		                <th>Vic</th>
+		                <th>Likes</th>
+		                <th>Dislikes</th>
+		                <th>Razlika</th>
+		                <th>Like</th>
+		                <th>Dislike</th>
+		            </tr>
+		            <tr th:each="joke, iterationStatus : ${jokes}">
+		                <td th:text="${iterationStatus.count}"></td>
+		                <td th:text="${joke.category.name}"></td>
+		                <td th:text="${joke.content}"></td>
+		                <td th:text="${joke.likes}"></td>
+		                <td th:text="${joke.dislikes}"></td>
+		                <td th:with="result=${joke.likes - joke.dislikes}" th:text="${result}"></td>
+		                <td><a th:href="${'/like/' + joke.id}"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a> </td>
+		                <td><a th:href="${'/dislike/' + joke.id}"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a> </td>
+		            </tr>
+		        </table>
+    		</div>
+	      </div> 
+	    </div> 
+	  </div>
+	</div>
+</body>
+</html>
